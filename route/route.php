@@ -9,6 +9,11 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+
+Route::group(['name'=>'/admin','prefix'=>'admin/UserController/'],function(){
+    Route::rule('index','index');
+});
+
 Route::get('think', function () {
     return 'hello,ThinkPHP5!';
 });
