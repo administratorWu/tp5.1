@@ -9,6 +9,6 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('admin/user/list',['title'=>'会员列表']);
+        return view('/admin/base/commmon',['title'=>'会员列表']);
     }
 }
