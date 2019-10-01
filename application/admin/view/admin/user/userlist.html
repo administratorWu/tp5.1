@@ -7,60 +7,46 @@
     
 <div class="row">
         <div class="col-lg-12">
-          <h2>Bordered Table</h2>
+          <!-- <h2>Bordered Table</h2> -->
           <div class="table-responsive">
             <table class="table table-bordered table-hover tablesorter">
               <thead>
                 <tr>
-                  <th>Page <i class="fa fa-sort"></i></th>
-                  <th>Visits <i class="fa fa-sort"></i></th>
-                  <th>% New Visits <i class="fa fa-sort"></i></th>
-                  <th>Revenue <i class="fa fa-sort"></i></th>
+                  <th>ID <i class="fa fa-sort"></i></th>
+                  <th>会员昵称 <i class="fa fa-sort"></i></th>
+                  <th>手机号码 <i class="fa fa-sort"></i></th>
+                  <th>实名状态 <i class="fa fa-sort"></i></th>
+                  <th>账户状态 <i class="fa fa-sort"></i></th>
+                  <th>注册时间 <i class="fa fa-sort"></i></th>
+                  <th>操作 <i class="fa fa-sort"></i></th>
                 </tr>
               </thead>
               <tbody>
+              {foreach $list as $k => $v}
                 <tr>
-                  <td>/index.html</td>
-                  <td>1265</td>
-                  <td>32.3%</td>
-                  <td>$321.33</td>
+                  <td>{$v.id}</td>
+                  <td>{$v.username}</td>
+                  <td>{$v.phone}</td>
+                  {if $v.true_status == 1}
+                    <td>已实名</td>
+                  {elseif $v.true_status == 2}
+                    <td>审核中</td>
+                  {elseif $v.true_status == 2}
+                    <td>审核失败</td>
+                  {else}
+                    <td>未实名</td>
+                  {/if}
+                  {if $v.status == 1}
+                    <td>正常</td>
+                  {else}
+                    <td>冻结</td>
+                  {/if}
+                  <td>{$v.addtime|date="Y-m-d H:i:s"}</td>
+                  <td>
+                    <button type="button" class="">编辑</button>
+                  </td>
                 </tr>
-                <tr>
-                  <td>/about.html</td>
-                  <td>261</td>
-                  <td>33.3%</td>
-                  <td>$234.12</td>
-                </tr>
-                <tr>
-                  <td>/sales.html</td>
-                  <td>665</td>
-                  <td>21.3%</td>
-                  <td>$16.34</td>
-                </tr>
-                <tr>
-                  <td>/blog.html</td>
-                  <td>9516</td>
-                  <td>89.3%</td>
-                  <td>$1644.43</td>
-                </tr>
-                <tr>
-                  <td>/404.html</td>
-                  <td>23</td>
-                  <td>34.3%</td>
-                  <td>$23.52</td>
-                </tr>
-                <tr>
-                  <td>/services.html</td>
-                  <td>421</td>
-                  <td>60.3%</td>
-                  <td>$724.32</td>
-                </tr>
-                <tr>
-                  <td>/blog/post.html</td>
-                  <td>1233</td>
-                  <td>93.2%</td>
-                  <td>$126.34</td>
-                </tr>
+              {/foreach}
               </tbody>
             </table>
           </div>
