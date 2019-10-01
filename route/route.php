@@ -10,8 +10,9 @@
 // +----------------------------------------------------------------------
 
 
-Route::group(['name'=>'/admin','prefix'=>'admin/UserController/'],function(){
+Route::group(['name'=>'/admin/user','prefix'=>'admin/UserController/'],function(){
     Route::rule('index','index');
+    Route::rule('adduser','adduser');
 });
 
 Route::get('think', function () {
