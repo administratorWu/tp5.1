@@ -9,6 +9,6 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('/admin/base/commmon',['title'=>'会员列表']);
+       return view('admin/base/common',['title'=>'公共模板']);
     }
 }
