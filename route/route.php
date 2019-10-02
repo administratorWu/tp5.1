@@ -15,6 +15,11 @@ Route::group(['name'=>'/admin/user','prefix'=>'admin/UserController/'],function(
     Route::rule('adduser','adduser');
 });
 
+Route::group(['name'=>'/admin/redis','prefix'=>'admin/RedisController/'],function(){
+    Route::rule('test','test');
+});
+
+
 Route::get('think', function () {
     return 'hello,ThinkPHP5!';
 });

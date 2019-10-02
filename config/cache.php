@@ -32,8 +32,10 @@ return [
         'host'    =>    '127.0.0.1',
         // 全局缓存有效期（0为永久有效）
         'expire' =>  0,
+        //缓存数据库
+        // 'select' => 1,
         // 缓存前缀
-        'prefix' =>  'think',
+        'prefix' =>  'test_',
     ],
 
 ];
