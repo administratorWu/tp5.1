@@ -5,13 +5,18 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Request;
 use app\admin\model\User;
+use think\facade\Cache;
 
 class UserController extends Controller
 {
     public function index()
     {
+        
         $list = User::field('id,username,phone,true_status,status,addtime')->order('id desc')->paginate(15);
-
+        foreach ($list as $k => $v) {
+            Cache::store('redis')->set('user_id='.$v['id'],$v);
+        }
+        
         return view('admin/user/userlist', ['title' => '会员列表', 'list' => $list]);
     }
 
