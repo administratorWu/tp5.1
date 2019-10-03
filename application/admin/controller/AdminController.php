@@ -13,7 +13,7 @@ class AdminController extends Controller
     public function addAdmin()
     {
         $arr = array(1,2,3);
-       dump($arr);
+        dump($arr);
         echo 1;
     }
 }
