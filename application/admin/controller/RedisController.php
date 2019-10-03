@@ -24,8 +24,6 @@ class RedisController extends Controller
             $newUser = $redistest->show_redis_page_info('userlist',$v['id']);
             if (!$newUser){
                 $redistest->set_redis_page_info('userlist',$v['id'],$v);
-            }else{
-                echo '有了';
             }
             
         }

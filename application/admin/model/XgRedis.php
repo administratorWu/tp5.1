@@ -20,7 +20,6 @@ class XgRedis extends Model
         $redis = new  Redis();
         if (!is_numeric($id) || !is_array($data)) return false;
         $hashName = $hash_prefix . '_' . $id;
-        
         $redis->hmset($hashName, $data);  //哈希
         $redis->zadd($hash_prefix . '_sort', $id, $id);  //有序集
         return true;
