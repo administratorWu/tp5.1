@@ -14,5 +14,6 @@ class AdminController extends Controller
     {
         $arr = array(1,2,3);
        dump($arr);
+        echo 1;
     }
 }
