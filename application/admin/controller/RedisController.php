@@ -17,20 +17,27 @@ class RedisController extends Controller
         // $redis->set('name','张三');
         // dump($redis->get('name'));
         $redistest = new XgRedis();
+        // 数据缓存到redis
         $post = User::field('id,username,phone,addtime')->select()->toArray();
        
         foreach($post as $k=>$v){
-            $redistest->set_redis_page_info('userlist',$v['id'],$v);
+            $newUser = $redistest->show_redis_page_info('userlist',$v['id']);
+            if (!$newUser){
+                $redistest->set_redis_page_info('userlist',$v['id'],$v);
+            }else{
+                echo '有了';
+            }
+            
         }
-        // dd(XgRedis::del_redis_page_info('postlist',[52,53]));  //删除redis中的 52 53数据
+        // dump($redistest->del_redis_page_info('userlist',[52,53]));  //删除redis中的 52 53数据
        
-        // dd(XgRedis::get_redis_page_info('postlist',1,5));  //分页
+        dump($redistest->get_redis_page_info('userlist',2,2));  //分页
        
-        // $id = 1;
-        // dd(XgRedis::show_redis_page_info('postlist',$id));  //查询单条
+        $id = 1;
+        dump($redistest->show_redis_page_info('userlist',$id));  //查询单条
        
-        // XgRedis::clear('db');  //db删除当前数据库数据    all删除所有数据
+        // $redistest->clear('db');  //db删除当前数据库数据    all删除所有数据
 
-        // XgRedis::vague_del('postlist');  //模糊删除
+        // $redistest->vague_del('userlist');  //模糊删除
     }
 }
