@@ -67,17 +67,32 @@ class UserController extends Controller
         }
 
         if ($request->isAjax()) {
+            
             $data = $request->post();
+            
             if ($data['password']) {
                 $data['password'] = md5($data['password']);
             }else{
                 unset($data['password']);
             }
-            $userinfo = User::where(['id'=>$id])->field('id,username,phone,true_status,status,addtime')->find()->toArray();
+            $userinfo = User::where(['id'=>$data['id']])->field('id,username,phone,true_status,status,addtime')->find()->toArray();
             
             if ($data['phone'] != $userinfo['phone']) {
-                
+                $user = new User();
+                $checkphone = $user->checkPhone($data['phone']);
+                if (!$checkphone){
+                    return json(['status'=>-1,'msg'=>'手机号已注册']);
+                }
             }
+            $amend = User::where(array('id'=>$data['id']))->update($data);
+            if ($amend) {
+                $redis = new XgRedis();
+                $redis->del_redis_page_info('userlist',array($data['id']));
+                $userinfo = User::where(['id'=>$data['id']])->field('id,username,phone,true_status,status,addtime')->find()->toArray();
+                $redis->set_redis_page_info('userlist',$userinfo['id'],$userinfo);
+                return json(['status'=>1,'msg'=>'操作成功']); 
+            }
+            return json(['status'=>-1,'msg'=>'操作失败']);
         }
     }
 }

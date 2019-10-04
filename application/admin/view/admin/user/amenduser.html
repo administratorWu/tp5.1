@@ -30,6 +30,7 @@
                     <option {if $user.status == 2} selected {/if} value="2">冻结</option>
                 </select>
             </div>
+            <input type="hidden" name="id" id="" value="{$user.id}">
             <button type="button" class="btn btn-primary col-lg-3" onclick="adduser()">确认</button>
         </form>
     </div>

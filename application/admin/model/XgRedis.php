@@ -90,6 +90,7 @@ class XgRedis extends Model
     public function del_redis_page_info($hash_prefix, $ids)
     {
         $redis = new  Redis();
+       
         if (!is_array($ids)) return false;
         foreach ($ids as $value) {
             $hashName = $hash_prefix . '_' . $value;
