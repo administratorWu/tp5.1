@@ -6,15 +6,22 @@ use think\Controller;
 use think\Request;
 use app\admin\model\User;
 use think\facade\Cache;
+use app\admin\model\XgRedis;
+use think\cache\driver\Redis;
 
 class UserController extends Controller
 {
     public function index()
     {
-        
+        $redis = new XgRedis();
         $list = User::field('id,username,phone,true_status,status,addtime')->order('id desc')->paginate(15);
-        foreach ($list as $k => $v) {
-            Cache::store('redis')->set('user_id='.$v['id'],$v);
+        
+        $arr = $list->toArray();//转换为数组
+        foreach ($arr['data'] as $k => $v) {
+            $newUser =  $redis->show_redis_page_info('userlist',$v['id']);
+            if (!$newUser){
+                $redis->set_redis_page_info('userlist',$v['id'],$v);
+            }
         }
         
         return view('admin/user/userlist', ['title' => '会员列表', 'list' => $list]);
@@ -43,6 +50,34 @@ class UserController extends Controller
                 return json(['status' => -1, 'msg' => '添加失败']);
             }
             return json(['status' => 1, 'msg' => '添加成功']);
+        }
+    }
+
+    public function amenduser(Request $request)
+    {
+        if ($request->isGet()) {
+            $id = $request->get('id');
+            $redis = new XgRedis();
+            $userinfo = $redis->show_redis_page_info('userlist',$id);
+            if (!$userinfo) {
+                $userinfo = User::where(['id'=>$id])->field('id,username,phone,true_status,status,addtime')->find()->toArray();
+                $rediss = $redis->set_redis_page_info('userlist',$userinfo['id'],$userinfo);
+            }
+            return view('admin/user/amenduser',['title'=>'修改会员','user'=>$userinfo]);
+        }
+
+        if ($request->isAjax()) {
+            $data = $request->post();
+            if ($data['password']) {
+                $data['password'] = md5($data['password']);
+            }else{
+                unset($data['password']);
+            }
+            $userinfo = User::where(['id'=>$id])->field('id,username,phone,true_status,status,addtime')->find()->toArray();
+            
+            if ($data['phone'] != $userinfo['phone']) {
+                
+            }
         }
     }
 }

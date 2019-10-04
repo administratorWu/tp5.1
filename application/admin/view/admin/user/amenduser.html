@@ -1,0 +1,60 @@
+{extend name="admin\base\common" /}
+
+{block name="title"}{$title}{/block}
+{block name="title2"}{$title}{/block}
+
+{block name="content"}
+<div class="row">
+    <div class="col-lg-6">
+        <form role="form" id="formvalue">
+
+            <div class="form-group has-success">
+                <label class="control-label" for="username">昵称</label>
+                <input type="text" class="form-control" name="username" value="{$user.username}" id="username">
+            </div>
+
+            <div class="form-group has-warning">
+                <label class="control-label" for="phone">手机</label>
+                <input type="text" class="form-control" name="phone"value="{$user.phone}"  id="phone">
+            </div>
+
+            <div class="form-group has-error">
+                <label class="control-label" for="password">密码</label>
+                <input type="text" class="form-control" name="password" id="password">
+            </div>
+
+            <div class="form-group has-error">
+                <label class="control-label" for="status">状态</label>
+                <select name="status" class="form-control" id="status">
+                    <option {if $user.status == 1} selected {/if} value="1">正常</option>
+                    <option {if $user.status == 2} selected {/if} value="2">冻结</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-primary col-lg-3" onclick="adduser()">确认</button>
+        </form>
+    </div>
+</div>
+{/block}
+
+{block name="js"}
+    <script>
+        function adduser()
+        {
+            var form = $('#formvalue').serialize();
+            $.ajax({
+                type:'POST',
+                url:'/admin/user/amenduser',
+                data:form,
+                success:function(red){
+                    // alert(red.msg);
+                    if (red.status == 1) {
+                        window.location.href="/admin/user/index";
+                    }
+                },
+                error:function(e){
+                    
+                }
+            });
+        }
+    </script>
+{/block}

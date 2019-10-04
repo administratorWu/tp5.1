@@ -13,6 +13,7 @@
 Route::group(['name'=>'/admin/user','prefix'=>'admin/UserController/'],function(){
     Route::rule('index','index');
     Route::rule('adduser','adduser');
+    Route::rule('amenduser','amenduser');
 });
 
 Route::group(['name'=>'/admin/redis','prefix'=>'admin/RedisController/'],function(){

@@ -43,12 +43,13 @@
                   {/if}
                   <td>{$v.addtime|date="Y-m-d H:i:s"}</td>
                   <td>
-                    <button type="button" class="">编辑</button>
+                   <a href="/admin/user/amenduser?id={$v.id}"><button type="button" class="">编辑</button></a> 
                   </td>
                 </tr>
               {/foreach}
               </tbody>
             </table>
+            {$list|raw}
           </div>
         </div>
       </div><!-- /.row -->
